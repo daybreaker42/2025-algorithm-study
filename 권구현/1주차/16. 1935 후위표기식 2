@@ -1,0 +1,31 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+int n;
+string c;
+stack<double> s;
+double x[26], t1, t2;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    cin >> n;
+    cin >> c;
+    for (int i = 0; i<n; i++) cin >> x[i];
+    for (auto cc: c) {
+        if (cc >= 'A' && cc <= 'Z') s.push(x[cc-'A']);
+        else {
+            t1 = s.top(); s.pop();
+            t2 = s.top(); s.pop();
+            
+            if (cc == '*') s.push(t2*t1);
+            else if (cc == '+') s.push(t2+t1);
+            else if (cc == '-') s.push(t2-t1);
+            else s.push(t2/t1);
+        }
+    }
+    cout.precision(2);
+    cout << fixed<< s.top();
+}
