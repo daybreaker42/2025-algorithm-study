@@ -1,0 +1,38 @@
+#include <iostream>
+#include <set>
+#include <map>
+
+using namespace std;
+int n, p, l;
+string s;
+set<pair<int, int>> st;
+map<int, int> m;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> n;
+    while (n--) {
+        cin >> p >> l;
+        st.insert({l, p});
+        m[p] = l;
+    }
+
+    cin >> n;
+    while(n--) {
+        cin >> s;
+        if (s == "recommend") {
+            cin >> p;
+            if (p == 1) cout << st.rbegin()->second << '\n';
+            else cout << st.begin()->second << '\n';
+        } else if (s == "add") {
+            cin >> p >> l;
+            st.insert({l, p});
+            m[p] = l;
+        } else {
+            cin >> p;
+            st.erase({m[p], p});
+        }
+    }
+}

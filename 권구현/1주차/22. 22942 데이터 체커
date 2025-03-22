@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+vector<pair<int, int>> v;
+int n, x, r, d;
+string ans="YES";
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> n;
+    while (n--) {
+        cin >> x >> r;
+        if (v.size() == 0) v.push_back({x, r});
+        else {
+            for (auto vv: v) {
+                d = abs(x-vv.first);
+                if (vv.second+r >= d && abs(vv.second-r) <= d) {
+                    ans = "NO";
+                    goto res;
+                }
+            }
+        }
+    }
+    res:
+        cout << ans;
+}

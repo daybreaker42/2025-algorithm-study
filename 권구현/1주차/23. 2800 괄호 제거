@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <set>
+
+using namespace std;
+int tmp;
+string s, as;
+bool visited[201], isFirst=true;
+stack<int> st;
+vector<pair<int, int>> v;
+set<string> ans;
+
+void dfs(int idx) {
+    if (idx == v.size()) {
+        if (isFirst) {
+            isFirst = false;
+            return;
+        }
+        
+        as = "";
+        for (int i = 0; i<s.length(); i++) {
+            if (!visited[i]) continue;
+            as += s[i];
+        }
+        ans.insert(as);
+        return;
+    }
+    
+    dfs(idx+1);
+    visited[v[idx].first] = false;
+    visited[v[idx].second] = false;
+    dfs(idx+1);
+    visited[v[idx].first] = true;
+    visited[v[idx].second] = true;
+}
+
+int main() {
+    for (int i = 0; i<201; i++) visited[i] = true;
+    
+    cin >> s;
+    for(int i = 0; i<s.length(); i++) {
+        if (s[i] == '(') st.push(i);
+        else if (s[i] == ')') {
+            tmp = st.top();
+            st.pop();
+            v.push_back({tmp, i});
+        }
+    }
+    
+    dfs(0);
+    for (auto a: ans) cout << a << '\n';
+}

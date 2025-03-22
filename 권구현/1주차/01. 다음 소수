@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cmath>
+/*
+[문제]
+1. 테스트케이스 범위가 주어지지 않음
+-> t 제외하고 시간잡도 계산 했음.
+
+[방식 1]
+N이 4000000000이므로
+아리토스테네스 체를 만들 수 없음.
+bool형으로 리스트 만들 경우 메모리 약 4000MB이므로 128MB 넘어감.
+또한 시간복잡도도 N*loglogN이므로 1초(약 1억회 연산)도 넘어감.
+
+[방식 2]
+반복문으로 1씩 증가시켜가며 그 수가 소수인지 아닌지 판단.
+시간 복잡도가 (최대소수간격)*n^0.5임.
+-> 최대 소수 간격이 1억 이하인지 어떻게 앎? 
+-> 숫자가 커질 수록 소수의 간격은 원만하게 커짐.
+(2001년에 그때까지 n^525보다 간격이 작을 수 있다는 거 발견함.)
+-> 나는 최대소수간격이 n^0.5 이하는 될 것 같음. (아님 말고)
+-> 참고로 최대로 벌어질 수 있는 소수의 간격은 무한대임.
+-> n!+2 ~ n!+n은 소수가 될 수 없기 때문(ㄷㄷ)
+
+추가적으로, 이 문제에서는 i*i<=x가 안됨.
+-> i<=sqrt(x) 는 반복문 밖에서 한번만 연산이 되지만, i*i<=x는 매 반복문마다 곱셈이 연산되기 때문.
+*/
+using namespace std;
+long long t, n;
+
+bool isPrime(long long x) {
+    if (x == 0 || x == 1) return false;
+    else if (x<4) return true;
+    else
+        for (int i = 2; i<=sqrt(x); i++)
+            if (x%i == 0) return false;
+    return true;
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        while (1) {
+            if (!isPrime(n)) n++;
+            else break;
+        }
+        cout << n << '\n';
+    }
+    return 0;
+}

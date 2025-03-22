@@ -1,0 +1,42 @@
+#include <iostream>
+
+/*
+[의문점 1]
+precision(n)은 가장 큰 자리 수 부터 n자리를 출력하겠다는 뜻
+ex. precision(3): 3.33, 33.3
+cout << fixed와 사용해야 소수점 기준으로 n자리의 소수를 출력하겠다는 뜻
+그런데, fixed를 사용하지 않아도 정답이 맞음.
+
+[의문점 2]
+int tot, cnt=0;
+...
+cout << (double)tot/cnt;
+=> 이건 안되는데
+double tot, cnt=0;
+...
+cout << tot/cnt;
+=> 이건 맞음
+*/
+
+using namespace std;
+int n, a[500000], x;
+double tot, cnt=0;
+
+int gcd(int j, int k) {
+    return k == 0 ? j : gcd(k, j%k);
+}
+
+int main() {
+    cin >> n;
+    for (int i = 0; i<n; i++) cin >> a[i];
+    cin >> x;
+
+    for (int i = 0; i<n; i++) {
+        if(gcd(a[i], x) == 1) {
+            cnt++;
+            tot+=a[i];
+        }
+    }
+    cout.precision(7);
+    cout << fixed << tot/cnt;
+}

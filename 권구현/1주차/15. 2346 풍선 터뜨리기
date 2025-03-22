@@ -1,0 +1,37 @@
+#include <iostream>
+#include <deque>
+
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n, x=0;
+	deque<pair<int, int>> a;
+	
+	cin >> n;
+	for (int i = 0; i<n;i++) {
+	    cin >> x;
+	    a.push_back({x, i+1});
+	}
+
+	while (!a.empty()) {
+	    
+	    cout << a.front().second << ' ';
+	    x = a.front().first;
+	    a.pop_front();
+	    
+	    if (x < 0) {
+	        for (int i = 0;i>x;i--) {
+	            a.push_front(a.back());
+	            a.pop_back();
+	        }
+	    } else {
+	        for (int i =0;i<x-1;i++) {
+	            a.push_back(a.front());
+	            a.pop_front();
+	        }
+	    }
+	}
+	return 0;
+}
