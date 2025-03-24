@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+int a, b, tmp;
+
+bool isPrime(int x) {
+    for (int i = 2; i<=sqrt(x); i++) 
+        if (x%i == 0) return false;
+    return true;
+}
+
+bool isPalindrome(int x) {
+    tmp = 0;
+    while (tmp < x) {
+        tmp = x%10+tmp*10;
+        x/=10;
+    }
+    return x == tmp || x == tmp/10;
+}
+
+int main() {   
+    cin >> a >> b;
+    
+    //천만 넘으면 소수가 없다고 함.
+    for (int i = a; i <= min(b, 10000000); i++) {
+        if (isPalindrome(i) && isPrime(i)) cout << i << '\n';
+    }
+    cout << -1;
+}

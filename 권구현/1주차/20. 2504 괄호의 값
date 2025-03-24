@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+string s;
+int d=0, v[17]={}, val;
+stack<int> p;
+
+int main() {
+    
+    cin >> s;
+    for(auto i: s) {
+        if (i == '(' || i == '[') {
+            p.push(i);
+            d++;
+        } else {
+            if (p.empty()) {
+                cout << 0;
+                return 0;
+            }
+            if (i == ')') {
+                if (p.top() != '(') break;
+                val = 2;
+            } else {
+                if (p.top() != '[') break;
+                val = 3;
+            }
+            p.pop();
+            if (v[d+1] == 0) v[d] += val;
+            else v[d] += v[d+1]*val;
+            v[d+1]=0;
+            d--;
+        }
+    }
+    if (p.size() != 0) cout << 0;
+    else cout << v[1];
+}

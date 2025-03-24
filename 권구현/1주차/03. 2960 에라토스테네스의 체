@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+int n, k, cnt=0, ans=0;
+bool x[1001] = {};
+
+int main() {
+    cin >> n >> k;
+    for(int i = 2; i<=n; i++) {
+        if (!x[i]) {
+            for (int ii = i; ii<=n; ii+=i) {
+                if (!x[ii]) {
+                    x[ii] = true;
+                    if (++cnt == k) {
+                        ans = ii;
+                        break;
+                    }
+                }
+            }
+        }
+        if (ans != 0) break;
+    }
+    cout << ans;
+}

@@ -59,11 +59,9 @@ int main() {
 
     if (cnt == 0) {
         cout << "Impossible" << endl;
-    }
-    else if (cnt == 1) {
+    } else if (cnt == 1) {
         cout << X << " " << A << " " << B << endl;
-    }
-    else {
+    } else {
         cout << "Multiple" << endl;
     }
 

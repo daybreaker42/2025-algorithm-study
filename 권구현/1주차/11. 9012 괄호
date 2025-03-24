@@ -1,0 +1,22 @@
+#include <iostream>
+
+using namespace std;
+int t, x;
+string s;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    cin >> t;
+    while (t--) {
+        cin >> s;
+        x = 0;
+        for (auto ss: s) {
+            if (ss == '(') x++;
+            else if (--x < 0) break;
+        }
+        if (x == 0) cout << "YES" << '\n';
+        else cout << "NO" << '\n';
+    }
+}
