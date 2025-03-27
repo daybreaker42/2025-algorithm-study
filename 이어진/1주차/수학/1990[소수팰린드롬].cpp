@@ -23,7 +23,7 @@ int main(void) {
 	cin >> a >> b;
 
 	for (int i = a; i <= b; i++) {
-		if (i >= 10000000) break; //무지성으로 5 1억 박아보니까 천만 넘는거 없길래 걸어봄
+		if (i >= 10000000) break;
 		if (isPalindrome(to_string(i))&&isPrime(i)) {
 			cout << i << endl;
 		}

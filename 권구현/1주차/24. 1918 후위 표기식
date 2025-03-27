@@ -1,0 +1,36 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+stack<char> c;
+string s;
+
+int main() {
+    cin >> s;
+    for (auto ss: s) {
+        if (ss == '+' || ss == '-') {
+            while (!c.empty() && c.top() != '(') {
+                cout << c.top();
+                c.pop();
+            }
+            c.push(ss);
+        } else if (ss == '*' || ss == '/') {
+            while(!c.empty() && (c.top() == '*' || c.top() == '/')) {
+                cout << c.top();
+                c.pop();
+            }
+            c.push(ss);
+        } else if (ss == '(') c.push(ss);
+        else if (ss == ')') {
+            while (!c.empty() && c.top() != '(') {
+                cout << c.top();
+                c.pop();
+            }
+            c.pop();
+        } else cout << ss;
+    }
+    while (!c.empty()) {
+        cout << c.top();
+        c.pop();
+    }
+}

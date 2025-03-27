@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+int k, m, cnt=0, num;
+bool isVisit[10] = {}, p[1000000] = {};
+
+//아리토스테네스의 체 초기화하는 함수
+void initP() {
+    p[0] = true, p[1] = true;
+    for (int i = 2; i<=1000; i++) 
+        if (!p[i])
+            for (int ii = 2*i; ii<1000000; ii+=i)
+                p[ii] = true;
+}
+
+//두 소수의 곱인지 확인하는 함수
+//시간복잡도:O(N^0.5)
+bool isMulPrime(int x) {
+    for (int i = 2; i<=sqrt(x); i++) 
+        if (x%i == 0 && !p[i] && !p[x/i]) return true;
+    return false;
+}
+
+//두 소수의 합인지 확인하는 함수
+//시간복잡도:O(N)
+bool isSumPrime(int x) {
+    for (int i = 2; i<(x+1)/2; i++) 
+        if (!p[i] && !p[x-i]) return true;
+    return false;
+}
+
+//0~9한번만 사용하는 숫자 구하는 함수
+//시간복잡도:O(10^N)
+void getNums(int d, string x) {
+    if (d == k) {
+        num = stoi(x);
+        //시간복잡도(O(N^2))
+        //최대 N=9*9!/5!=27216 => 2억번정도 계산되므로 ㄱㅊ
+        //시간 복잡도 적은 isMulPrime으로 연산 후 isSumPrime으로 확인
+        while(num%m == 0 && num/m != 0) num/=m;
+        if(isMulPrime(num) && isSumPrime(stoi(x))) cnt++;
+        return;
+    }
+    for (int i = 0; i<10; i++) {
+        if (d == 0 && i == 0) continue;
+        if (!isVisit[i]) {
+            isVisit[i] = true;
+            getNums(d+1, x+to_string(i));
+            isVisit[i] = false;
+        }
+    }
+}
+
+int main() {
+    initP();
+    cin >> k >> m;
+    getNums(0, "");
+    cout << cnt;
+}

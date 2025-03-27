@@ -10,8 +10,6 @@ bool isPrime(const int& n) {
 	return true;
 }
 
-//¹®Á¦ Ç®°í³ª¼­: ¼Ò¼ö³¢¸® °öÇÏ¸é ÃÖ¼Ò°ø¹è¼ö¶ó ±»ÀÌ ÀÌ ¿¬»êÀÌ ÇÊ¿ä°¡ ¾øÀ½..
-//Q. ¿¡¶óÅä½ºÅ×³×½º°¡ ´õ ºü¸¥°¡?
 long long gcd(long long a, long long b) {
 	return (a % b) ? gcd(b, a % b) : b;
 }
@@ -22,13 +20,13 @@ long long lcm(long long a, long long b) {
 
 int main() {
 	int n, cnt=0;
-	long long L=0; //ÃÖ¼Ò°ø¹è¼ö
+	long long L=0; //ìµœì†Œê³µë°°ìˆ˜
 	cin >> n;
 
-	//nÄ­ ¹è¿­ »ı¼º
+	//nì¹¸ ë°°ì—´ ìƒì„±
 	int* arr = new int[n];
 	
-	//¹è¿­ ¿ø¼Ò ÀÔ·Â
+	//ë°°ì—´ ì›ì†Œ ì…ë ¥
 	for (int i = 0; i < n; i++) {
 		cin >> arr[i];
 		if (isPrime(arr[i])) cnt++;
