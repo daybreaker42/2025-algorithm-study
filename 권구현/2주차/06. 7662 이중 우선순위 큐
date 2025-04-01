@@ -1,0 +1,79 @@
+/*
+오름차순 우선순위큐와 내림차순 우선순위 큐 두개를 만듦
+=> 1일때 오름차순 우선순위 큐에서 빼고, -1 일때 내림차순 우선순위 큐에서 뺌
+[여기서 문제]
+오름차순 우선순위 큐가 내림차순 우선순위 큐에서 뺀 숫자에 접근할 수 있음(서로 독립적이니까) 
+=> 접근 못하게 빼는 명령어 오면 상대 우선순위 큐에서 뺀 숫자가 있는지 확인
+[해결]
+따라서 map을 이용하여 각각의 우선순위 큐에서 빠진 숫자와 개수를 기록함. 그리고 빼줌
+=> 내림차순 우선순위 큐에서 뺀 요소 오름차순 우선순위 큐에서도 빼줌
+*/
+
+#include <iostream>
+#include <queue>
+#include <map>
+
+using namespace std;
+char c;
+int t, k, n, cnt, u, d; 
+priority_queue<int> upq;                                //오름차순(큰거 우선)
+priority_queue<int, vector<int>, greater<int>> dpq;     //내림차순(작은거 우선)
+map<int, int> um, dm;                                   //dm: dpq에서 빠진 숫자 저장하는 map, um: upq에서 빠진 숫자 저장하는 map
+                                                        //=> 다른 우선순위 큐에서 빠진 숫자는 본인의 우선순위 큐에서도 빠져야하기 때문에 map으로 기록
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> t;
+    while(t--) {
+        //케이스 바뀔때 마다 초기화 해줘야함.
+        upq = {}, dpq = {}, um = {}, dm = {};
+        cnt=0;
+        
+        cin >> k;
+        while(k--) {
+            cin >> c >> n;
+            if (c=='I') {
+                upq.push(n);
+                dpq.push(n);
+                
+                //upq와 dpq는 독립적이므로 size가 0이 아니더라도 더 이상 요소를 못빼는 경우가 있음
+                //=>cnt로 empty확인
+                cnt++;          
+            } else if (cnt) {
+                if (n == -1) {
+                    //upq에서 빼야하는 숫자 기록
+                    if (dm.find(dpq.top()) == dm.end()) dm[dpq.top()] = 0;
+                    dm[dpq.top()]++;
+                    
+                    //어쨌든 본인에서 가장 작은 숫자는 빠져야 함.
+                    dpq.pop();
+                } else {
+                    //dpq에서 빼야하는 숫자 기록
+                    if (um.find(upq.top()) == um.end()) um[upq.top()] = 0;
+                    um[upq.top()]++;
+
+                    //어쨌든 본인에서 가장 큰 숫자는 빠져야 함.
+                    upq.pop();
+                }
+
+                //상대의 우선순위 큐에서 빠진 숫자를 본인의 우선순위 큐에서도 빼야함.
+                //만약 오름차순 우선순위 큐에서 빠진 숫자가 내림차순 우선순위 큐의 top에 있지 않고 뒤쪽에 있다면 안 빠지니까 문제가 생기지 않을까?
+                // => 당장 top에 있는 것은 제일 작은 숫자가 맞으므로 무시해도 상관 x, 어차피 크기는 cnt가 계산함.
+                while (dm[upq.top()]) {
+                    dm[upq.top()]--;
+                    upq.pop();
+                }
+                while (um[dpq.top()]) {
+                    um[dpq.top()]--;
+                    dpq.pop();
+                }
+                cnt--;
+            }
+        }
+
+        if (!cnt) cout << "EMPTY\n";
+        else cout << upq.top() << ' ' << dpq.top() << '\n';
+    }
+}
