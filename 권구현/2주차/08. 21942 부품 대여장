@@ -1,0 +1,48 @@
+/*
+그냥 노가다 문제
+*/
+#include <iostream>
+#include <map>
+
+using namespace std;
+long long gap, lt;
+int n, f, month[12] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+string l, d, t, p, m;
+map<pair<string, string>, long long> note;
+map<string, long long> fine;
+
+long long calc_gap(string ed, string et) {
+    long long gt;
+    gt = month[stoi(ed.substr(5, 7))-1] + stoi(ed.substr(8, 10)) - 1;
+    gt *= 24*60;
+    gt += stoi(et.substr(0, 2))*60 + stoi(et.substr(3, 5));
+    return gt;
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> n >> l >> f;
+    lt = stoi(l.substr(0, 3))*24*60 + stoi(l.substr(4, 6))*60 + stoi(l.substr(7, 9));
+    
+    for(int i = 0; i<n; i++) {
+        cin >> d >> t >> p >> m;
+        gap = 0;
+        if (note.find({m, p}) == note.end()) note[{m, p}] = -1;
+        if (note[{m, p}] == -1) note[{m, p}] = calc_gap(d, t);
+        else {
+            gap = calc_gap(d, t) - note[{m, p}];
+            if (gap > lt) {
+                if (fine.find(m) == fine.end()) fine[m] = 0;
+                fine[m] += gap - lt;
+            }
+            note[{m, p}] = -1;
+        }
+    }
+
+    if (!fine.size()) cout << -1;
+    else 
+        for(auto it: fine) 
+            cout << it.first << ' ' << it.second*f << '\n';
+}
