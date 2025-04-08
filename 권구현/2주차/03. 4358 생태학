@@ -1,0 +1,27 @@
+/*
+기본적인 map문제
+*/
+#include <iostream>
+#include <map>
+
+using namespace std;
+string s;
+int ans;
+map<string, int> m;
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    while (getline(cin, s)) {
+        if (m.find(s) == m.end()) m[s] = 0;
+        m[s]++;
+        ans++;
+    }
+
+    cout.precision(4);
+    for(auto mm: m) {
+        cout << mm.first << ' ';
+        cout << fixed << (double)mm.second/ans*100 << '\n';
+    }
+}
