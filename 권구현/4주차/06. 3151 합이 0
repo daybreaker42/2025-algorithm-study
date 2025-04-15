@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N;
+    cin >> N;
+    vector<int> arr(N);
+
+    for (int i = 0; i < N; ++i) {
+        cin >> arr[i];
+    }
+
+    sort(arr.begin(), arr.end());
+    long long answer = 0;
+
+    for (int i = 0; i < N - 2; ++i) {
+        int left = i + 1;
+        int right = N - 1;
+
+        while (left < right) {
+            int sum = arr[i] + arr[left] + arr[right];
+            if (sum == 0) {
+                // 같은 수가 여러 개 있는 경우 고려
+                if (arr[left] == arr[right]) {
+                    long long count = right - left + 1;
+                    answer += count * (count - 1) / 2;
+                    break;
+                } else {
+                    int lcount = 1, rcount = 1;
+                    while (arr[left] == arr[left + 1]) {
+                        lcount++; left++;
+                    }
+                    while (arr[right] == arr[right - 1]) {
+                        rcount++; right--;
+                    }
+                    answer += (long long)lcount * rcount;
+                    left++;
+                    right--;
+                }
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+
+    cout << answer << '\n';
+    return 0;
+}
