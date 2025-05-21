@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    string s;
+    cin >> n >> s;
+
+    int blue = 0, red = 0;
+    char prev = ' ';
+    for (char c : s) {
+        if (c != prev) {
+            if (c == 'B') blue++;
+            else red++;
+        }
+        prev = c;
+    }
+
+    cout << min(blue, red) + 1 << '\n';
+}

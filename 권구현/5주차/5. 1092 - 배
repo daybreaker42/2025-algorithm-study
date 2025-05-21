@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    vector<int> crane(n);
+    for (int &c : crane) cin >> c;
+
+    cin >> m;
+    vector<int> box(m);
+    for (int &b : box) cin >> b;
+
+    sort(crane.rbegin(), crane.rend());
+    sort(box.rbegin(), box.rend());
+
+    if (box[0] > crane[0]) {
+        cout << -1 << '\n';
+        return 0;
+    }
+
+    int time = 0;
+    while (!box.empty()) {
+        int idx = 0;
+        for (int i = 0; i < n && !box.empty(); i++) {
+            while (idx < box.size() && crane[i] < box[idx]) idx++;
+            if (idx < box.size()) box.erase(box.begin() + idx);
+        }
+        time++;
+    }
+
+    cout << time << '\n';
+}
