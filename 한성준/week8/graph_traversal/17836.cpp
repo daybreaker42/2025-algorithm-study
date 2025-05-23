@@ -58,7 +58,8 @@ int main() {
     if (ans == -1) {
         cout << "Fail" << endl;
     } else {
-        cout << (ans <= t ? ans : "Fail") << endl;
+        if(ans) cout << ans << endl;
+        else cout << "Fail" << endl;
     }
 
     return 0;

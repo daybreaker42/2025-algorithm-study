@@ -2,8 +2,7 @@
 #include <vector>
 #include <queue>
 
-using namespace namespace std;
-
+using namespace std;
 int main() {
     int n, k;
     cin >> n >> k;
